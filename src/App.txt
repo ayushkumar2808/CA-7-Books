@@ -1,0 +1,41 @@
+import React, { useEffect, useState } from 'react'
+import './components.css'
+function Main() {
+    const [data,setData]=useState([])
+    const fetchApi=()=>{
+        fetch('https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=CQklTqGZ4X3bnIELjXQwXz7ZsxBA48Oa').then((data) => {
+            return data.json();
+          }).then((bookData)=>{
+            
+           
+            setData(bookData.results.books)
+            console.log(bookData)
+          }).catch((error) => {
+            console.log(error);
+          });
+        
+        }
+       
+        useEffect(() => {
+            fetchApi()
+            
+          },[]);
+
+  return (
+    <div style={{backgroundColor:'yellows'}} id='main-div' >
+        {data.map((book) => (
+           <> <div id='card'><img id='book-img' src={book.book_image} alt="" />
+       <h3 id='name'>{book.title}</h3>
+        <h4>{book.author}</h4>
+        
+        </div>
+        </>
+      ))}
+      {/* {data[0].title} */}
+            
+    </div>
+  )
+
+}
+
+export default Main
